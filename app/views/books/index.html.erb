@@ -1,0 +1,46 @@
+<div class="books-container">
+  <h1>Books</h1>
+
+  <table class="books-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td><%= book.title %></td>
+          <td><%= book.author %></td>
+
+          <!-- status -->
+          <td>
+            <% if book.checked_out? %>
+              <span class="status checked-out">Checked Out</span>
+            <% else %>
+              <span class="status available">Available</span>
+            <% end %>
+          </td>
+
+          <!-- action -->
+          <td>
+            <% if book.checked_out? %>
+              <%= button_to "Return",
+                  return_book_path(book),
+                  method: :patch %>
+            <% else %>
+              <%= button_to "Check Out",
+                  checkout_book_path(book),
+                  method: :patch %>
+            <% end %>
+          </td>
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
